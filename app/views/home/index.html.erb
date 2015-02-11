@@ -1,0 +1,22 @@
+Home!
+
+<h3>Organizations</h3>
+
+<pre>
+  <%= Github::Client::Say.new.say "Yay Github!" %>
+</pre>
+
+<% for @org in @orgs %>
+  <%= @org.login %>
+  <img src="<%= @org.avatar_url %>" style="max-width: 80px;">
+  <pre><%= @org %></pre>
+<% end %>
+
+<% for @org, @org_repos in @all_repos %>
+  <h1><%= @org %></h1>
+  <% for @repo in @org_repos %>
+    <pre><%= @repo %></pre>
+  <% end %>
+  <h2><%# @repo.full_name %></h2>
+  <p><%# @repo.description %></p>
+<% end %>
