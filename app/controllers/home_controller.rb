@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
   def index
     gh = Services::Github.new
-    @orgs = gh.organizations
-    @all_repos = gh.all_repos
+    # @orgs = gh.organizations
+    # @repos = gh.repositories
+    @breakdown = gh.repo_breakdown
   end
 end

@@ -1,22 +1,56 @@
-Home!
+<p>Personal - <%= pretty_filesize(@breakdown[:personal][:filesize], "KB") %></p>
+
+<table>
+  <thead>
+    <th>Repository</th>
+    <th>Size</th>
+    <th>Languages</th>
+  </thead>
+  <tbody>
+    <% for @repo in @breakdown[:personal][:repositories] %>
+      <tr>
+        <td><%= @repo[:name] %></td>
+        <td><%= pretty_filesize(@repo[:size], "KB") %></td>
+        <td>--</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <h3>Organizations</h3>
 
-<pre>
-  <%= Github::Client::Say.new.say "Yay Github!" %>
-</pre>
-
-<% for @org in @orgs %>
-  <%= @org.login %>
-  <img src="<%= @org.avatar_url %>" style="max-width: 80px;">
-  <pre><%= @org %></pre>
+<% if @orgs %>
+  <% for @org in @orgs %>
+    <%= @org[:login] %>
+    <img src="<%= @org[:avatar_url] %>" style="max-width: 80px;">
+    <pre><%= @org %></pre>
+  <% end %>
 <% end %>
 
-<% for @org, @org_repos in @all_repos %>
-  <h1><%= @org %></h1>
-  <% for @repo in @org_repos %>
-    <pre><%= @repo %></pre>
+<% if @repos %>
+  <% for @repo in @repos %>
+    <h2><%= @repo.full_name %> - <%= pretty_filesize(@repo[:size], "KB") %></h2>
+    <p><%= @repo.description %></p>
   <% end %>
-  <h2><%# @repo.full_name %></h2>
-  <p><%# @repo.description %></p>
+<% end %>
+
+<% for @org_name, @org in @breakdown[:organizations] %>
+  <p><%= @org_name %> - <%= pretty_filesize(@org[:filesize], "KB") %></p>
+
+  <table>
+    <thead>
+      <th>Repository</th>
+      <th>Size</th>
+      <th>Languages</th>
+    </thead>
+    <tbody>
+      <% for @repo in @org[:repositories] %>
+        <tr>
+          <td><%= @repo[:name] %></td>
+          <td><%= pretty_filesize(@repo[:size], "KB") %></td>
+          <td>--</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
